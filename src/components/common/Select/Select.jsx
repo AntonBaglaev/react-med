@@ -12,12 +12,16 @@ const Select = ({
   className = '', 
   disabled = false 
 }) => {
+  const handleChange = (e) => {
+    onChange(e); // Теперь передаем полное событие, а не только значение
+  };
+
   return (
     <div className={`select-container ${className}`}>
       <select
         className="select"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChange}
         disabled={disabled}
       >
         {placeholder && (
