@@ -1,0 +1,26 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+
+  .test-data-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .test-data-btn {
+      padding: 10px;
+      font-size: 14px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      color: #333;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+}

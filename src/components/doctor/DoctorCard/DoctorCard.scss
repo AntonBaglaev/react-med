@@ -1,0 +1,132 @@
+.doctor-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__avatar {
+    margin-right: 15px;
+
+    &-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #e3f2fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1976d2;
+      font-size: 30px;
+    }
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__name {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: #333;
+  }
+
+  &__specialty {
+    margin: 0 0 10px 0;
+    color: #555;
+    font-size: 14px;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: center;
+
+    &-value {
+      font-weight: bold;
+      margin-right: 5px;
+      color: #ff9800;
+    }
+
+    &-stars {
+      color: #ffc107;
+      font-size: 14px;
+    }
+  }
+
+  &__details {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__icon {
+    margin-right: 10px;
+    color: #1976d2;
+    width: 16px;
+    text-align: center;
+  }
+
+  &__description {
+    padding: 15px 20px;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  &__actions {
+    padding: 0 20px 20px 20px;
+  }
+
+  &__book-btn {
+    width: 100%;
+    padding: 10px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #1565c0;
+    }
+
+    &:active {
+      background: #0d47a1;
+    }
+  }
+}
