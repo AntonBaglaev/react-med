@@ -7,21 +7,16 @@ import {
     WORK_HOURS,
 } from './constants';
 import { store } from '../store/store';
-import {
-    setDoctors,
-    setPatients,
-    setAppointments,
-    setSpecialties,
-} from '../store/slices';
+import { initializeTestData } from '../store/slices/dataSlice';
 
 export const initTestData = () => {
-    // Проверяем, есть ли уже данные в localStorage
     if (!localStorage.getItem('persist:root')) {
-        // Если нет, инициализируем тестовые данные
-        store.dispatch(setDoctors(TEST_DOCTORS));
-        store.dispatch(setPatients(TEST_PATIENTS));
-        store.dispatch(setAppointments(TEST_APPOINTMENTS));
-        store.dispatch(setSpecialties(TEST_SPECIALTIES));
+        store.dispatch(initializeTestData({
+            doctors: TEST_DOCTORS,
+            patients: TEST_PATIENTS,
+            appointments: TEST_APPOINTMENTS,
+            specialties: TEST_SPECIALTIES
+        }));
     }
 };
 
@@ -60,4 +55,16 @@ export const getDayName = (dateString) => {
     ];
     const dayIndex = new Date(dateString).getDay();
     return days[dayIndex];
+};
+
+export const filterAppointmentsByPatient = (appointments, patientId) => {
+    return appointments.filter(app => app.patientId === patientId);
+};
+
+export const sortAppointmentsByDate = (appointments, ascending = true) => {
+    return [...appointments].sort((a, b) => {
+        const dateA = new Date(`${a.date}T${a.time}`);
+        const dateB = new Date(`${b.date}T${b.time}`);
+        return ascending ? dateA - dateB : dateB - dateA;
+    });
 };

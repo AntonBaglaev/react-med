@@ -1,26 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-// Функции для работы с localStorage
-const loadAppointments = () => {
-  try {
-    const saved = localStorage.getItem('medical-appointments');
-    return saved ? JSON.parse(saved) : [];
-  } catch (e) {
-    console.error('Ошибка загрузки записей из localStorage:', e);
-    return [];
-  }
-};
-
-const saveAppointments = (appointments) => {
-  try {
-    localStorage.setItem('medical-appointments', JSON.stringify(appointments));
-  } catch (e) {
-    console.error('Ошибка сохранения записей в localStorage:', e);
-  }
-};
+import { STORAGE_KEYS } from '../../utils/constants';
+import { saveToLocalStorage, loadFromLocalStorage } from '../../utils/storage';
 
 const initialState = {
-  appointments: loadAppointments(),
+  appointments: loadFromLocalStorage(STORAGE_KEYS.APPOINTMENTS) || [],
   status: 'idle',
   error: null
 };
@@ -32,7 +15,7 @@ const appointmentsSlice = createSlice({
     addAppointment: {
       reducer(state, action) {
         state.appointments.push(action.payload);
-        saveAppointments(state.appointments);
+        saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
       },
       prepare(payload) {
         return {
@@ -40,28 +23,31 @@ const appointmentsSlice = createSlice({
             ...payload,
             id: Date.now().toString(),
             createdAt: new Date().toISOString(),
-            status: 'pending'
+            status: 'scheduled'
           }
         };
       }
     },
     cancelAppointment: (state, action) => {
-      state.appointments = state.appointments.filter(
-        app => app.id !== action.payload
-      );
-      saveAppointments(state.appointments);
+      const appointment = state.appointments.find(app => app.id === action.payload);
+      if (appointment) {
+        appointment.status = 'cancelled';
+        saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
+      }
     },
-    updateAppointmentStatus: (state, action) => {
-      const { id, status } = action.payload;
+    completeAppointment: (state, action) => {
+      const { id, diagnosis, prescription } = action.payload;
       const appointment = state.appointments.find(app => app.id === id);
       if (appointment) {
-        appointment.status = status;
-        saveAppointments(state.appointments);
+        appointment.status = 'completed';
+        appointment.diagnosis = diagnosis;
+        appointment.prescription = prescription;
+        saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
       }
     },
     clearAppointments: (state) => {
       state.appointments = [];
-      localStorage.removeItem('medical-appointments');
+      saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, []);
     }
   }
 });
@@ -69,12 +55,12 @@ const appointmentsSlice = createSlice({
 export const {
   addAppointment,
   cancelAppointment,
-  updateAppointmentStatus,
+  completeAppointment,
   clearAppointments
 } = appointmentsSlice.actions;
 
 export const selectAllAppointments = (state) => state.appointments.appointments;
-export const selectDoctorAppointments = (doctorId) => (state) => 
-  state.appointments.appointments.filter(app => app.doctorId === doctorId);
+export const selectPatientAppointments = (patientId) => (state) => 
+  state.appointments.appointments.filter(app => app.patientId === patientId);
 
 export default appointmentsSlice.reducer;
