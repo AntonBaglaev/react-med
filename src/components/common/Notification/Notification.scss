@@ -1,4 +1,3 @@
-// src/components/common/Notification/Notification.scss
 .notification-container {
     position: fixed;
     top: 20px;
@@ -10,32 +9,37 @@
   }
   
   .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     padding: 15px 20px;
     border-radius: 5px;
     color: white;
-    cursor: pointer;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
     max-width: 300px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   
-    &-success {
+    &--success {
       background-color: #4caf50;
     }
   
-    &-error {
+    &--error {
       background-color: #f44336;
     }
   
-    &-warning {
-      background-color: #ff9800;
-    }
-  
-    &-info {
+    &--info {
       background-color: #2196f3;
     }
   
-    &:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
+    &__close {
+      margin-left: 15px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 5px;
     }
   }

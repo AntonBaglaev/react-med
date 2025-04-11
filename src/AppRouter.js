@@ -9,7 +9,7 @@ import PatientCabinet from './pages/PatientCabinet/PatientCabinet';
 import Auth from './pages/Auth/Auth';
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen';
 import AppointmentsList from './components/AppointmentsList/AppointmentsList';
-import PatientCabinetLayout from './pages/PatientCabinet/PatientCabinetLayout'; // Добавлено
+import PatientCabinetLayout from './pages/PatientCabinet/PatientCabinetLayout';
 import PatientInfo from './components/patient/PatientInfo/PatientInfo';
 import NotFound from './pages/NotFound/NotFound';
 

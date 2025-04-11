@@ -13,8 +13,8 @@ const PatientCabinet = () => {
         
         <div className="patient-cabinet__main">
           <Outlet />
-          {/* Добавляем список записей на главную страницу кабинета */}
-          <AppointmentsList />
+
+         {/* <AppointmentsList /> */} 
         </div>
       </div>
     </div>

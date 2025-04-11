@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addAppointment } from "../../store/slices/appointmentsSlice";
 import { showNotification } from "../../store/slices/notificationSlice";
 import DoctorCard from "../../components/doctor/DoctorCard/DoctorCard";
@@ -12,6 +12,7 @@ import "./Doctors.scss";
 
 const Doctors = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const specialties = useSelector((state) => state.data?.specialties || []);
   const doctors = useSelector((state) => state.data?.doctors || []);
@@ -127,12 +128,17 @@ const Doctors = () => {
     dispatch(addAppointment(appointmentData));
     dispatch(showNotification({
       type: 'success',
+      message: 'Запись успешно подтверждена',
       message: `Запись к ${selectedDoctor.lastName} на ${selectedDate.toLocaleDateString()} в ${selectedTime} создана!`
     }));
 
     setIsModalOpen(false);
     setSelectedDate(null);
     setSelectedTime(null);
+
+    setTimeout(() => {
+      navigate('/patient-cabinet/appointments');
+    }, 1000);
   };
 
   return (

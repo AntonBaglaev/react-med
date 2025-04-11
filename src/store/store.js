@@ -17,6 +17,7 @@ import doctorsReducer from './slices/doctorsSlice';
 import appointmentsReducer from './slices/appointmentsSlice';
 import dataReducer from './slices/dataSlice';
 import { initializeTestData } from './slices/dataSlice';
+import notificationReducer from './slices/notificationSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   doctors: doctorsReducer,
   appointments: appointmentsReducer,
   data: dataReducer,
+  notification: notificationReducer,
 });
 
 const persistConfig = {
