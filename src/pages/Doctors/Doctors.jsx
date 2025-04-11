@@ -118,6 +118,7 @@ const Doctors = () => {
       doctorId: selectedDoctor.id,
       patientId: currentUser.id,
       doctorName: `${selectedDoctor.lastName} ${selectedDoctor.firstName}`,
+      patientName: `${currentUser.firstName} ${currentUser.lastName}`,
       specialty: selectedDoctor.specialty,
       date: selectedDate.toISOString().split('T')[0],
       time: selectedTime,

@@ -1,40 +1,234 @@
-.doctor-cabinet {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  
-    &__header {
-      margin-bottom: 2rem;
-    }
-  
-    &__title {
-      font-size: 2rem;
-      color: #2c3e50;
-      margin: 0;
-    }
-  
-    &__content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-  
-      @media (min-width: 992px) {
-        flex-direction: row;
-      }
-    }
-  
-    &__sidebar {
-      flex: 0 0 300px;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-  
-    &__main {
-      flex: 1;
-      background: #fff;
-      border-radius: 8px;
-      padding: 2rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.cabinet-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  &.unauthorized {
+    text-align: center;
+    padding: 40px;
+    color: #e74c3c;
+  }
+
+  &.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
     }
   }
+}
+
+.cabinet-header {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
+}
+
+.appointments-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 20px;
+
+  h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 0;
+
+  img {
+    max-width: 200px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+  }
+
+  p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+}
+
+.appointment-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  &.completed {
+    border-left: 4px solid #2ecc71;
+  }
+
+  &.cancelled {
+    border-left: 4px solid #e74c3c;
+  }
+
+  &.scheduled {
+    border-left: 4px solid #3498db;
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+
+  .patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+
+  .patient-info {
+    flex: 1;
+
+    h4 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .patient-meta {
+      margin: 5px 0 0;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+    }
+  }
+
+  .status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+
+    &.scheduled {
+      background-color: #e1f0fa;
+      color: #3498db;
+    }
+
+    &.completed {
+      background-color: #e1f9f1;
+      color: #2ecc71;
+    }
+
+    &.cancelled {
+      background-color: #fdeaea;
+      color: #e74c3c;
+    }
+  }
+}
+
+.card-body {
+  padding: 15px;
+
+  .appointment-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+
+      .meta-label {
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .appointment-details {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+
+    h5 {
+      margin: 0 0 10px;
+      color: #2c3e50;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 0;
+      color: #34495e;
+    }
+  }
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  background: #f9f9f9;
+
+  .btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &.primary {
+      background-color: #2ecc71;
+      color: white;
+
+      &:hover {
+        background-color: #27ae60;
+      }
+    }
+
+    &.secondary {
+      background-color: #e74c3c;
+      color: white;
+
+      &:hover {
+        background-color: #c0392b;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,51 +1,35 @@
-const STORAGE_PREFIX = 'mc_';
-
+// Улучшенные утилиты для работы с localStorage
 export const saveToLocalStorage = (key, value) => {
-  if (typeof window === 'undefined') return;
-  
-  try {
-    const serializedValue = JSON.stringify(value);
-    localStorage.setItem(`${STORAGE_PREFIX}${key}`, serializedValue);
-  } catch (error) {
-    console.error('LocalStorage save error:', error);
-    if (process.env.NODE_ENV === 'production') {
-      window.Sentry?.captureException(error);
+    try {
+        const serializedValue = JSON.stringify(value);
+        localStorage.setItem(`medcenter_${key}`, serializedValue); // Добавил префикс
+    } catch (error) {
+        console.error('Error saving to localStorage:', error);
+        // Можно добавить отправку ошибки в Sentry или аналогичный сервис
     }
-  }
 };
 
 export const loadFromLocalStorage = (key) => {
-  if (typeof window === 'undefined') return null;
-  
-  try {
-    const serializedValue = localStorage.getItem(`${STORAGE_PREFIX}${key}`);
-    return serializedValue ? JSON.parse(serializedValue) : null;
-  } catch (error) {
-    console.error('LocalStorage load error:', error);
-    if (process.env.NODE_ENV === 'production') {
-      window.Sentry?.captureException(error);
+    try {
+        const serializedValue = localStorage.getItem(`medcenter_${key}`);
+        return serializedValue ? JSON.parse(serializedValue) : null;
+    } catch (error) {
+        console.error('Error loading from localStorage:', error);
+        return null;
     }
-    return null;
-  }
 };
 
 export const removeFromLocalStorage = (key) => {
-  if (typeof window === 'undefined') return;
-  
-  try {
-    localStorage.removeItem(`${STORAGE_PREFIX}${key}`);
-  } catch (error) {
-    console.error('LocalStorage remove error:', error);
-    if (process.env.NODE_ENV === 'production') {
-      window.Sentry?.captureException(error);
+    try {
+        localStorage.removeItem(`medcenter_${key}`);
+    } catch (error) {
+        console.error('Error removing from localStorage:', error);
     }
-  }
 };
 
-export const clearAppStorage = () => {
-  if (typeof window === 'undefined') return;
-  
-  Object.keys(localStorage)
-    .filter(key => key.startsWith(STORAGE_PREFIX))
-    .forEach(key => localStorage.removeItem(key));
+// Новая функция для очистки всех данных приложения
+export const clearAppLocalStorage = () => {
+    Object.keys(localStorage)
+        .filter(key => key.startsWith('medcenter_'))
+        .forEach(key => localStorage.removeItem(key));
 };
