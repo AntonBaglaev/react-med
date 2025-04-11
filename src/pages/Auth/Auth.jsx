@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { login, register } from "../../store/slices/authSlice";
+import { clearAppStorage } from "../../utils/storage";
 import AuthForm from "../../components/auth/AuthForm/AuthForm";
 import AuthSwitch from "../../components/auth/AuthSwitch/AuthSwitch";
 import "./Auth.scss";
@@ -32,6 +33,13 @@ const Auth = () => {
     }
   };
 
+  const handleClearStorage = () => {
+    if (window.confirm("Очистить все данные приложения? Это действие нельзя отменить.")) {
+      clearAppStorage();
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="auth">
       <div className="auth__container">
@@ -48,6 +56,14 @@ const Auth = () => {
             </Link>
             <AuthSwitch isLogin={isLogin} onSwitch={setIsLogin} />
           </div>
+
+          {/* Простая кнопка очистки */}
+          <button 
+            onClick={handleClearStorage}
+            className="auth__clear-btn"
+          >
+            Очистить данные приложения
+          </button>
         </div>
       </div>
     </div>

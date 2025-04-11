@@ -33,3 +33,28 @@ export const clearAppLocalStorage = () => {
         .filter(key => key.startsWith('medcenter_'))
         .forEach(key => localStorage.removeItem(key));
 };
+
+export const clearAppStorage = () => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    // Очищаем только наши данные с префиксом
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('mc_')) {
+        localStorage.removeItem(key);
+      }
+    });
+    
+    // Дополнительно очищаем данные redux-persist если используются
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('persist:')) {
+        localStorage.removeItem(key);
+      }
+    });
+  } catch (error) {
+    console.error('Ошибка при очистке хранилища:', error);
+    if (window.Sentry) {
+      window.Sentry.captureException(error);
+    }
+  }
+};
