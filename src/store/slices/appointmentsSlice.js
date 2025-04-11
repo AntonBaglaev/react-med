@@ -14,8 +14,17 @@ const appointmentsSlice = createSlice({
   reducers: {
     addAppointment: {
       reducer(state, action) {
-        state.appointments.push(action.payload);
-        saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
+        // Добавлена проверка на дубликаты
+        const isDuplicate = state.appointments.some(app => 
+          app.doctorId === action.payload.doctorId &&
+          app.date === action.payload.date &&
+          app.time === action.payload.time
+        );
+        
+        if (!isDuplicate) {
+          state.appointments.push(action.payload);
+          saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
+        }
       },
       prepare(payload) {
         return {

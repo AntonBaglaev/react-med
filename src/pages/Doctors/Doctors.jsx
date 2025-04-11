@@ -15,6 +15,7 @@ const Doctors = () => {
   const location = useLocation();
   const specialties = useSelector((state) => state.data?.specialties || []);
   const doctors = useSelector((state) => state.data?.doctors || []);
+  const currentUser = useSelector((state) => state.auth.currentUser); // Перенесено наверх
   
   // Состояния компонента
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,9 +49,9 @@ const Doctors = () => {
     if (!isWorkingDay(doctor, date)) return [];
     
     const slots = [];
-    const startHour = 9; // Начало рабочего дня
-    const endHour = 18;  // Конец рабочего дня
-    const slotDuration = 30; // 30 минутные слоты
+    const startHour = 9;
+    const endHour = 18;
+    const slotDuration = 30;
 
     for (let hour = startHour; hour < endHour; hour++) {
       for (let minute = 0; minute < 60; minute += slotDuration) {
@@ -91,7 +92,7 @@ const Doctors = () => {
   const handleBookClick = (doctor) => {
     setSelectedDoctor(doctor);
     setIsModalOpen(true);
-    setSelectedDate(new Date()); // Установка текущей даты по умолчанию
+    setSelectedDate(new Date());
     setSelectedTime(null);
   };
 
@@ -104,13 +105,22 @@ const Doctors = () => {
       return;
     }
 
+    if (!currentUser) {
+      dispatch(showNotification({
+        type: 'error',
+        message: 'Необходимо авторизоваться'
+      }));
+      return;
+    }
+
     const appointmentData = {
       doctorId: selectedDoctor.id,
+      patientId: currentUser.id,
       doctorName: `${selectedDoctor.lastName} ${selectedDoctor.firstName}`,
       specialty: selectedDoctor.specialty,
       date: selectedDate.toISOString().split('T')[0],
       time: selectedTime,
-      status: 'pending',
+      status: 'scheduled',
       createdAt: new Date().toISOString()
     };
 

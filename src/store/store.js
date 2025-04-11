@@ -30,7 +30,7 @@ const persistConfig = {
   key: 'medcenter',
   version: 1,
   storage,
-  whitelist: ['auth', 'patients'],
+  whitelist: ['auth', 'patients', 'appointments'],
   timeout: null,
   migrate: (state) => {
     if (!state) {
@@ -41,13 +41,14 @@ const persistConfig = {
       return Promise.resolve({
         ...state,
         data: {
-          doctors: [],
-          patients: [],
-          appointments: [],
-          specialties: [],
-          initialized: false,
-          loading: false,
-          error: null
+          ...state.data,
+          doctors: state.data?.doctors || [],
+          patients: state.data?.patients || [],
+          appointments: state.data?.appointments || [],
+          specialties: state.data?.specialties || [],
+          initialized: state.data?.initialized || false,
+          loading: state.data?.loading || false,
+          error: state.data?.error || null
         }
       });
     }
