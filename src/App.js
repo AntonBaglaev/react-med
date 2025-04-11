@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
@@ -10,26 +10,37 @@ import LoadingScreen from './components/common/LoadingScreen/LoadingScreen';
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    // Добавляем обработчик ошибок persistence
+    const unsubscribe = persistor.subscribe(() => {
+      const { bootstrapped } = persistor.getState();
+      if (bootstrapped) {
+        // Проверяем состояние после восстановления
+        const state = store.getState();
+        if (!state.appointments || !Array.isArray(state.appointments.appointments)) {
+          console.error('Invalid appointments state after rehydration');
+        }
+      }
+    });
+
+    return () => {
+      // Правильно отписываемся
+      if (unsubscribe) unsubscribe();
+    };
+  }, []);
+
   return (
     <Provider store={store}>
-      {/* PersistGate задерживает рендеринг UI пока состояние не восстановится из localStorage */}
-      <PersistGate 
+      <PersistGate
         loading={<LoadingScreen message="Загрузка приложения..." />}
         persistor={persistor}
       >
         <div className="app">
-          {/* Общий header для всех страниц */}
           <Header />
-          
-          {/* Основное содержимое страницы */}
           <main className="app__main">
             <AppRouter />
           </main>
-          
-          {/* Общий footer для всех страниц */}
           <Footer />
-          
-          {/* Компонент для отображения уведомлений */}
           <Notification />
         </div>
       </PersistGate>

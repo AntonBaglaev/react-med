@@ -31,30 +31,31 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ['auth', 'patients', 'appointments'],
-  timeout: null,
+  // Добавляем миграцию для устранения дублирования
   migrate: (state) => {
-    if (!state) {
-      return Promise.resolve(undefined);
-    }
+    if (!state) return Promise.resolve(undefined);
     
-    if (!state.data) {
+    // Удаляем дубликаты записей
+    if (state.appointments?.appointments) {
+      const uniqueApps = state.appointments.appointments.reduce((acc, current) => {
+        const x = acc.find(item => item.id === current.id);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
+      
       return Promise.resolve({
         ...state,
-        data: {
-          ...state.data,
-          doctors: state.data?.doctors || [],
-          patients: state.data?.patients || [],
-          appointments: state.data?.appointments || [],
-          specialties: state.data?.specialties || [],
-          initialized: state.data?.initialized || false,
-          loading: state.data?.loading || false,
-          error: state.data?.error || null
+        appointments: {
+          ...state.appointments,
+          appointments: uniqueApps
         }
       });
     }
-    
     return Promise.resolve(state);
-  },
+  }
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -67,23 +68,11 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV !== 'production',
 });
 
-export const initializeStore = async () => {
-  await persistor.persist();
-  return store;
-};
-
-export const persistor = persistStore(store);
-
-// Инициализация тестовых данных после восстановления состояния
-const initializeApp = async () => {
-  await persistor.persist();
+export const persistor = persistStore(store, null, () => {
   const state = store.getState();
   if (!state.data.initialized) {
     store.dispatch(initializeTestData());
   }
-};
-
-initializeApp();
+});
