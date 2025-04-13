@@ -48,10 +48,7 @@ const PatientCabinetLayout = ({ tab }) => {
   };
 
   const navItems = [
-    { id: 'appointments', label: 'Мои записи', icon: faCalendarAlt, path: 'appointments' },
-    { id: 'doctors', label: 'Мои врачи', icon: faUserMd, path: 'doctors' },
-    { id: 'history', label: 'История болезней', icon: faHistory, path: 'history' },
-    { id: 'settings', label: 'Настройки', icon: faCog, path: 'settings' },
+    { id: 'appointments', label: 'Мои записи', icon: faCalendarAlt, path: '/patient-cabinet' },
   ];
 
   if (loading) {
@@ -81,12 +78,6 @@ const PatientCabinetLayout = ({ tab }) => {
     switch(tab) {
       case 'appointments':
         return <AppointmentsList />;
-      case 'doctors':
-        return <div>Список врачей</div>;
-      case 'history':
-        return <div>История болезней</div>;
-      case 'settings':
-        return <div>Настройки</div>;
       default:
         return <AppointmentsList />;
     }
