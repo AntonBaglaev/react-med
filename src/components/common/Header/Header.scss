@@ -13,6 +13,11 @@
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 1rem;
+
+		@media (max-width: 768px) {
+			flex-wrap: wrap;
+			gap: 1rem;
+		  }
 	}
 
 	&__logo {
@@ -20,11 +25,28 @@
 		font-weight: 700;
 		color: #4a76a8;
 		text-decoration: none;
+
+		@media (max-width: 480px) {
+			font-size: 1.2rem;
+		  }
 	}
 
 	&__nav {
 		display: flex;
 		gap: 1.5rem;
+
+		@media (max-width: 768px) {
+			order: 3;
+			width: 100%;
+			justify-content: center;
+			padding-top: 1rem;
+			border-top: 1px solid #eee;
+		  }
+		  
+		  @media (max-width: 480px) {
+			gap: 1rem;
+			font-size: 0.9rem;
+		  }
 	}
 
 	&__nav-link {
@@ -42,6 +64,14 @@
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+
+		@media (max-width: 768px) {
+			order: 2;
+		  }
+		  
+		  @media (max-width: 480px) {
+			gap: 0.5rem;
+		  }
 	}
 
 	&__user-name {
@@ -49,6 +79,14 @@
 		align-items: center;
 		gap: 0.5rem;
 		color: #333;
+
+		@media (max-width: 480px) {
+			font-size: 0.9rem;
+			
+			span {
+			  display: none;
+			}
+		  }
 	}
 
 	&__auth-link {
@@ -64,5 +102,10 @@
 			background-color: #4a76a8;
 			color: white;
 		}
+
+		@media (max-width: 480px) {
+			padding: 0.4rem 0.8rem;
+			font-size: 0.9rem;
+		  }
 	}
 }
