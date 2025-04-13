@@ -6,12 +6,11 @@ import {
   TEST_SPECIALTIES 
 } from '../../utils/constants';
 
-// Асинхронные Thunk-функции
 export const initializeTestData = createAsyncThunk(
   'data/initializeTestData',
   async (_, { rejectWithValue }) => {
     try {
-      // В реальном приложении здесь могла бы быть загрузка с API
+
       return {
         doctors: TEST_DOCTORS,
         patients: TEST_PATIENTS,
@@ -28,7 +27,6 @@ export const addDoctorAsync = createAsyncThunk(
   'data/addDoctor',
   async (doctorData, { rejectWithValue }) => {
     try {
-      // Здесь могла бы быть реальная API-интеграция
       const newDoctor = {
         ...doctorData,
         id: `d${Date.now()}`
@@ -39,8 +37,6 @@ export const addDoctorAsync = createAsyncThunk(
     }
   }
 );
-
-// Аналогичные Thunk'и можно создать для других операций
 
 const initialState = {
   doctors: [],
@@ -56,7 +52,6 @@ const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    // Синхронные редьюсеры для локальных изменений
     updateDoctor(state, action) {
       const index = state.doctors.findIndex(d => d.id === action.payload.id);
       if (index !== -1) {
@@ -72,7 +67,6 @@ const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Обработка initializeTestData
       .addCase(initializeTestData.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -90,7 +84,6 @@ const dataSlice = createSlice({
         state.loading = false;
       })
 
-      // Обработка addDoctorAsync
       .addCase(addDoctorAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -106,14 +99,12 @@ const dataSlice = createSlice({
   }
 });
 
-// Экспорт действий
 export const { 
   updateDoctor, 
   deleteDoctor,
   clearDataError 
 } = dataSlice.actions;
 
-// Селекторы
 export const selectDoctors = state => state.data.doctors;
 export const selectPatients = state => state.data.patients;
 export const selectAppointments = state => state.data.appointments;
@@ -122,7 +113,6 @@ export const selectDataInitialized = state => state.data.initialized;
 export const selectDataLoading = state => state.data.loading;
 export const selectDataError = state => state.data.error;
 
-// Дополнительные селекторы
 export const selectDoctorById = (state, doctorId) => 
   state.data.doctors.find(d => d.id === doctorId);
 

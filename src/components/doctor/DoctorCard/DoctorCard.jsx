@@ -5,7 +5,6 @@ import { faUserMd, faCalendarAlt, faClock, faStethoscope } from "@fortawesome/fr
 import "./DoctorCard.scss";
 
 const DoctorCard = ({ doctor, onBookAppointment }) => {
-	// Форматирование графика работы
 	const formatSchedule = (schedule) => {
 		const daysMap = {
 			monday: "Пн",
@@ -23,7 +22,6 @@ const DoctorCard = ({ doctor, onBookAppointment }) => {
 			.join(", ");
 	};
 
-	// Расчет рейтинга (можно заменить реальными данными)
 	const renderRating = () => {
 		const rating = doctor.rating || (Math.random() * 2 + 3).toFixed(1);
 		return (

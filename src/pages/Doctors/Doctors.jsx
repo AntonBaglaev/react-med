@@ -16,9 +16,8 @@ const Doctors = () => {
   const location = useLocation();
   const specialties = useSelector((state) => state.data?.specialties || []);
   const doctors = useSelector((state) => state.data?.doctors || []);
-  const currentUser = useSelector((state) => state.auth.currentUser); // Перенесено наверх
+  const currentUser = useSelector((state) => state.auth.currentUser);
   
-  // Состояния компонента
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
   const [filteredDoctors, setFilteredDoctors] = useState([]);
@@ -27,7 +26,6 @@ const Doctors = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
-  // Проверка рабочего дня врача
   const isWorkingDay = (doctor, date) => {
     if (!doctor?.schedule || !date) return false;
     
@@ -45,7 +43,6 @@ const Doctors = () => {
     return doctor.schedule[daysMap[dayOfWeek]];
   };
 
-  // Генерация временных слотов
   const generateTimeSlots = (doctor, date) => {
     if (!isWorkingDay(doctor, date)) return [];
     
@@ -64,7 +61,6 @@ const Doctors = () => {
     return slots;
   };
 
-  // Фильтрация врачей
   useEffect(() => {
     if (location.state?.specialty) {
       setSelectedSpecialty(location.state.specialty);
@@ -89,7 +85,6 @@ const Doctors = () => {
     setFilteredDoctors(filtered);
   }, [doctors, selectedSpecialty, searchTerm]);
 
-  // Обработчики для записи
   const handleBookClick = (doctor) => {
     setSelectedDoctor(doctor);
     setIsModalOpen(true);

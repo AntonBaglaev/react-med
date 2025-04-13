@@ -30,12 +30,10 @@ const PatientCabinetLayout = ({ tab }) => {
 
   useEffect(() => {
     if (currentUser?.id) {
-      // Загружаем данные пациента
       if (!currentPatient) {
         dispatch(loadPatientData(currentUser.id));
       }
       
-      // Явно загружаем врачей и проверяем результат
       dispatch(fetchDoctors())
         .unwrap()
         .then(() => console.log('Врачи успешно загружены'))

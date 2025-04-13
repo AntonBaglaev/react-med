@@ -3,18 +3,15 @@ import { TEST_DOCTORS } from '../../utils/constants';
 import { saveToLocalStorage, loadFromLocalStorage } from '../../utils/storage';
 import { STORAGE_KEYS } from '../../utils/constants';
 
-// Асинхронная загрузка врачей
 export const fetchDoctors = createAsyncThunk(
   'doctors/fetchDoctors',
   async (_, { rejectWithValue }) => {
     try {
-      // 1. Проверяем наличие данных в localStorage
       const cachedDoctors = loadFromLocalStorage(STORAGE_KEYS.DOCTORS);
       if (cachedDoctors && cachedDoctors.length > 0) {
         return cachedDoctors;
       }
 
-      // 2. Если нет в кеше, используем тестовые данные (в реальном приложении - API запрос)
       saveToLocalStorage(STORAGE_KEYS.DOCTORS, TEST_DOCTORS);
       return TEST_DOCTORS;
     } catch (error) {
@@ -23,12 +20,10 @@ export const fetchDoctors = createAsyncThunk(
   }
 );
 
-// Асинхронное добавление врача
 export const addNewDoctor = createAsyncThunk(
   'doctors/addNewDoctor',
   async (doctorData, { rejectWithValue, getState }) => {
     try {
-      // В реальном приложении здесь будет API запрос
       const newDoctor = {
         ...doctorData,
         id: Date.now().toString(),
@@ -56,7 +51,7 @@ const doctorsSlice = createSlice({
   name: 'doctors',
   initialState,
   reducers: {
-    // Синхронные редюсеры
+
     setDoctors: (state, action) => {
       state.doctors = action.payload;
       saveToLocalStorage(STORAGE_KEYS.DOCTORS, action.payload);
@@ -73,7 +68,7 @@ const doctorsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Обработка fetchDoctors
+
       .addCase(fetchDoctors.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -86,8 +81,7 @@ const doctorsSlice = createSlice({
         state.error = action.payload;
         state.loading = false;
       })
-      
-      // Обработка addNewDoctor
+
       .addCase(addNewDoctor.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -103,7 +97,6 @@ const doctorsSlice = createSlice({
   }
 });
 
-// Экспорт действий
 export const { 
   setDoctors, 
   setCurrentDoctor, 
@@ -111,7 +104,6 @@ export const {
   clearDoctorsError 
 } = doctorsSlice.actions;
 
-// Селекторы
 export const selectAllDoctors = (state) => state.doctors.doctors;
 export const selectCurrentDoctor = (state) => state.doctors.currentDoctor;
 export const selectDoctorsLoading = (state) => state.doctors.loading;

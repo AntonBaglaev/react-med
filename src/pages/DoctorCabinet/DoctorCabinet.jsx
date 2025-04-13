@@ -13,7 +13,6 @@ const DoctorCabinet = () => {
 	const patients = useSelector((state) => state.patients.patients);
 	const loading = useSelector((state) => state.appointments.status === "loading");
 
-	// Получаем полные данные пациентов
 	const getPatientFullName = (appointment) => {
 		if (appointment.patientName) return appointment.patientName;
 		if (appointment.patientData) {

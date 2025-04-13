@@ -15,13 +15,10 @@ const Header = () => {
 
 	const handleLogout = async () => {
 		try {
-			// 1. Диспатчим действие выхода
 			await dispatch(logout()).unwrap();
 
-			// 2. Переходим на главную страницу
 			navigate("/", { replace: true });
 
-			// 3. Принудительное обновление (если нужно)
 			window.location.reload();
 		} catch (error) {
 			console.error("Ошибка при выходе:", error);

@@ -1,11 +1,9 @@
-// Улучшенные утилиты для работы с localStorage
 export const saveToLocalStorage = (key, value) => {
     try {
         const serializedValue = JSON.stringify(value);
-        localStorage.setItem(`medcenter_${key}`, serializedValue); // Добавил префикс
+        localStorage.setItem(`medcenter_${key}`, serializedValue);
     } catch (error) {
         console.error('Error saving to localStorage:', error);
-        // Можно добавить отправку ошибки в Sentry или аналогичный сервис
     }
 };
 
@@ -27,7 +25,6 @@ export const removeFromLocalStorage = (key) => {
     }
 };
 
-// Новая функция для очистки всех данных приложения
 export const clearAppLocalStorage = () => {
     Object.keys(localStorage)
         .filter(key => key.startsWith('medcenter_'))
@@ -38,14 +35,12 @@ export const clearAppStorage = () => {
   if (typeof window === 'undefined') return;
 
   try {
-    // Очищаем только наши данные с префиксом
     Object.keys(localStorage).forEach(key => {
       if (key.startsWith('mc_')) {
         localStorage.removeItem(key);
       }
     });
     
-    // Дополнительно очищаем данные redux-persist если используются
     Object.keys(localStorage).forEach(key => {
       if (key.startsWith('persist:')) {
         localStorage.removeItem(key);

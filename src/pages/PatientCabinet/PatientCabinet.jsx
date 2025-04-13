@@ -8,13 +8,12 @@ const PatientCabinet = () => {
     <div className="patient-cabinet">
       <div className="patient-cabinet__content">
         <div className="patient-cabinet__sidebar">
-          {/* Навигация или другая боковая панель */}
+        
         </div>
         
         <div className="patient-cabinet__main">
           <Outlet />
 
-         {/* <AppointmentsList /> */} 
         </div>
       </div>
     </div>

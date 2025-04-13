@@ -57,7 +57,6 @@ const Auth = () => {
             <AuthSwitch isLogin={isLogin} onSwitch={setIsLogin} />
           </div>
 
-          {/* Простая кнопка очистки */}
           <button 
             onClick={handleClearStorage}
             className="auth__clear-btn"

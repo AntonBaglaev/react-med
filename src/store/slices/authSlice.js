@@ -67,7 +67,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Обработчики для login
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -82,7 +81,6 @@ const authSlice = createSlice({
         state.loading = false;
       })
 
-      // Обработчики для register
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -97,7 +95,6 @@ const authSlice = createSlice({
         state.loading = false;
       })
 
-      // Обработка восстановления состояния из localStorage
       .addCase('persist/REHYDRATE', (state, action) => {
         if (action.payload?.auth) {
           const { currentUser, isAuthenticated } = action.payload.auth;
@@ -113,7 +110,6 @@ const authSlice = createSlice({
 
 export const { logout, clearError } = authSlice.actions;
 
-// Селекторы
 export const selectCurrentUser = (state) => state.auth.currentUser;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 export const selectAuthLoading = (state) => state.auth.loading;

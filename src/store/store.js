@@ -33,11 +33,9 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ['auth', 'patients', 'appointments'],
-  // Добавляем миграцию для устранения дублирования
   migrate: (state) => {
     if (!state) return Promise.resolve(undefined);
     
-    // Удаляем дубликаты записей
     if (state.appointments?.appointments) {
       const uniqueApps = state.appointments.appointments.reduce((acc, current) => {
         const x = acc.find(item => item.id === current.id);

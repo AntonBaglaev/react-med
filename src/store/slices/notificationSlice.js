@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   message: null,
-  type: null, // 'success', 'error', 'info'
+  type: null, 
   isVisible: false
 };
 
@@ -15,7 +15,7 @@ const notificationSlice = createSlice({
       state.type = action.payload.type;
       state.isVisible = true;
     },
-    removeNotification: (state) => {  // Изменили hideNotification на removeNotification
+    removeNotification: (state) => {  
       state.isVisible = false;
       state.message = null;
       state.type = null;

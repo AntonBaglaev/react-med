@@ -8,10 +8,8 @@ const useAuth = () => {
     const { currentUser, isAuthenticated } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        // Инициализация тестовых данных при первом запуске
         initTestData();
 
-        // Проверка аутентификации при загрузке
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
             dispatch(loginSuccess(user));

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faUser, 
-  faCalendarAlt, 
-  faPhone, 
+import {
+  faUser,
+  faCalendarAlt,
+  faPhone,
   faMapMarkerAlt,
   faTint,
   faAllergies,

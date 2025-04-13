@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { STORAGE_KEYS } from '../../utils/constants';
 import { saveToLocalStorage, loadFromLocalStorage } from '../../utils/storage';
 
-// Функция для загрузки и валидации записей
 const loadValidatedAppointments = () => {
   try {
     const loaded = loadFromLocalStorage(STORAGE_KEYS.APPOINTMENTS);
@@ -47,12 +46,10 @@ const appointmentsSlice = createSlice({
         try {
           const { payload } = action;
           
-          // Валидация обязательных полей
           if (!payload.doctorId || !payload.patientId || !payload.date || !payload.time) {
             throw new Error('Missing required appointment fields');
           }
 
-          // Проверка на конфликты времени
           const hasConflict = state.appointments.some(app => 
             app.doctorId === payload.doctorId &&
             app.date === payload.date &&
@@ -65,12 +62,10 @@ const appointmentsSlice = createSlice({
             return;
           }
 
-          // Добавление новой записи
           state.appointments.push({
             ...payload,
             updatedAt: new Date().toISOString()
           });
-          
           state.lastUpdated = new Date().toISOString();
           state.error = null;
           saveToLocalStorage(STORAGE_KEYS.APPOINTMENTS, state.appointments);
@@ -96,7 +91,7 @@ const appointmentsSlice = createSlice({
             updatedAt: new Date().toISOString(),
             diagnosis: '',
             prescription: '',
-            patientData: { // Добавляем полные данные пациента
+            patientData: { 
               firstName: patientName.split(' ')[0],
               lastName: patientName.split(' ')[1],
               phone: '',

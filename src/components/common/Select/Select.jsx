@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Select.scss';
 
-const Select = ({ 
-  options, 
-  value, 
-  onChange, 
-  placeholder = 'Выберите...', 
-  className = '', 
-  disabled = false 
+const Select = ({
+  options,
+  value,
+  onChange,
+  placeholder = 'Выберите...',
+  className = '',
+  disabled = false
 }) => {
   const handleChange = (e) => {
-    onChange(e); // Теперь передаем полное событие, а не только значение
+    onChange(e);
   };
 
   return (
