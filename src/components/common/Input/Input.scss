@@ -3,6 +3,10 @@
 	width: 240px;
 	margin-bottom: 1rem;
 	padding-top: 15px;
+
+	@media (max-width: 480px) {
+		width: 150px;
+	  }
 }
 
 .input-icon {
