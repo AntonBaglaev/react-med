@@ -232,3 +232,119 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@media (max-width: 992px) {
+  .cabinet-container {
+    padding: 15px;
+  }
+
+  .cabinet-header {
+    h1 {
+      font-size: 1.8rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+    }
+  }
+
+  .appointments-section {
+    padding: 15px;
+
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card-header {
+    flex-wrap: wrap;
+
+    .patient-info {
+      flex-basis: calc(100% - 55px); // 40px аватар + 15px отступ
+    }
+
+    .status-badge {
+      margin-top: 10px;
+      margin-left: 55px; // Выравнивание под именем
+    }
+  }
+
+  .card-body {
+    .appointment-meta {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .cabinet-header {
+    h1 {
+      font-size: 1.5rem;
+    }
+    h2 {
+      font-size: 1rem;
+    }
+  }
+
+  .appointments-section {
+    h3 {
+      font-size: 1.2rem;
+    }
+  }
+
+  .appointment-card {
+    border-radius: 6px;
+  }
+
+  .card-header {
+    padding: 10px;
+
+    .patient-avatar {
+      width: 35px;
+      height: 35px;
+      margin-right: 10px;
+    }
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  .empty-state {
+    img {
+      max-width: 150px;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .cabinet-container {
+    padding: 10px;
+  }
+
+  .cabinet-header {
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .appointments-section {
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  .card-actions .btn {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+}
