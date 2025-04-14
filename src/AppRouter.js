@@ -18,19 +18,19 @@ const AppRouter = () => {
   const currentUser = useSelector(selectCurrentUser);
   const isInitialized = useSelector(selectIsInitialized);
 
-  // Показываем экран загрузки пока Redux Persist не восстановит состояние
+
   if (!isInitialized) {
     return <LoadingScreen message="Восстановление сессии..." />;
   }
 
   return (
     <Routes>
-      {/* Публичные маршруты */}
+
       <Route path="/" element={<Home />} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/auth" element={<Auth />} />
 
-      {/* Защищенные маршруты для врача */}
+
       <Route
         path="/doctor-cabinet/*"
         element={
@@ -42,7 +42,7 @@ const AppRouter = () => {
         }
       />
 
-      {/* Защищенные маршруты для пациента с вложенными маршрутами */}
+
       <Route
         path="/patient-cabinet"
         element={
@@ -59,9 +59,9 @@ const AppRouter = () => {
         <Route path="history" element={<PatientCabinetLayout tab="history" />} />
         <Route path="settings" element={<PatientCabinetLayout tab="settings" />} />
       </Route>
-        
 
-      {/* Резервный маршрут для несуществующих страниц */}
+
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
